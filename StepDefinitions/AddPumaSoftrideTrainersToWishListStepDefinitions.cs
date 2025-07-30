@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace MandMdirectExampleProject.StepDefinitions
 {
     [Binding]
-    public sealed class AddAdidasSambaTrainersToWishListStepDefinitions
+    public sealed class AddPumaSoftrideTrainersToWishListStepDefinitions
     {
 
 
@@ -26,22 +26,45 @@ namespace MandMdirectExampleProject.StepDefinitions
 
 
 
-        [When(@"User searches for Adidas Samba trainers")]
-        public void WhenUserSearchesForAdidasSambaTrainers()
+        [When(@"User searches for Puma Softride trainers")]
+        public void WhenUserSearchesForPumaSoftrideTrainers()
         {
-            Homepage homepage = new Homepage(driver);
-            SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+             Homepage homepage = new Homepage(driver);
+             SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
 
-           
+
             homepage.SearchFieldInputProductSearch();
             Thread.Sleep(2500);
             homepage.ClickOnSearchFieldSearchButton();
             Thread.Sleep(2500);
-            searchResultsPage.ClickOnAdidasBrand();
+            searchResultsPage.ClickOnPumaBrand();
             Thread.Sleep(2500);
-            searchResultsPage.ClickOnAdidasSamba();
+            searchResultsPage.ProductTypeFilter();
             Thread.Sleep(2500);
-        }
+            searchResultsPage.RunningShoesCheckBox();
+            Thread.Sleep(2500);
+            searchResultsPage.ClickOnSortByHighestPrice();
+            Thread.Sleep(3000);
+            searchResultsPage.ClickOnPumaSoftrideProduct();
+            Thread.Sleep(3000);       
+
+
+        //[When(@"User searches for Adidas Samba trainers")]
+        // public void WhenUserSearchesForAdidasSambaTrainers()
+        //{
+        //    Homepage homepage = new Homepage(driver);
+        //    SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+
+
+        //    homepage.SearchFieldInputProductSearch();
+        //    Thread.Sleep(2500);
+        //    homepage.ClickOnSearchFieldSearchButton();
+        //    Thread.Sleep(2500);
+        //    searchResultsPage.ClickOnAdidasBrand();
+        //    Thread.Sleep(2500);
+        //    searchResultsPage.ClickOnAdidasSamba();
+        //   Thread.Sleep(2500);
+         }
 
         [When(@"User adds the trainers to the wishlist")]
         public void WhenUserAddsTheTrainersToTheWishlist()

@@ -29,13 +29,13 @@ namespace MandMdirectExampleProject.Pages.UserAccount
 
 
         //elements
-        By WelcomeNameTextValidation = By.Id("welcomeName");
+        By WelcomeLinkMyAccountPage = By.XPath("//a[contains(text(),'Welcome')]");
 
         // Elements for Delivery Addresses 
         By DeliveryAddresses = By.XPath("//a[contains(text(),'Delivery Addresses')]");
         By DeleteDeliveryAddressesBtn1 = By.XPath("(//a[contains(text(),'Delete')])[1]");
         By DeleteDeliveryAddressesBtn2 = By.XPath("(//a[contains(text(),'Delete')])[2]");
-        By EditDeliveryAddressesBtn1 = By.XPath("(//a[contains(text(),'Edit')])[1]");
+        By EditDeliveryAddressesBtn1 = By.Id("edit-name-link");
         By EditDeliveryAddressBtn2 = By.XPath("(//a[@id='edit-delivery-link'])[2]");
         By AddressLine1Field = By.XPath("//input[@placeholder='Address line 1']");
         By AddressLine2Field = By.XPath("//input[@placeholder='Address line 2']");
@@ -53,9 +53,42 @@ namespace MandMdirectExampleProject.Pages.UserAccount
         By YesButtonDeleteConfirmation = By.Id("delete-confirmation-yes");
 
 
+        // Customer Name elements
+        By CustomerName = By.XPath("//a[contains(text(),'Customer Name')]");
+        By EditDetails = By.Id("edit-name-link");
+        By Title = By.XPath("//select[@id='Salutation']");
+        By FirstName = By.XPath("//input[@id='FirstName']");
+        By Surname = By.XPath("//input[@id='Surname']");
+        By Cancel = By.XPath("//input[@id='cancel']");
+        By SaveBtnCustomerName = By.XPath("//input[@id='btnSave']");
+
+
+        //Phone Numbers elements
+        By PhoneNumbers = By.XPath("//a[contains(text(),'Phone Numbers')]");
+        By EditDetailsPhoneNumbersTab = By.Id("edit-phone-link");
+        By LandlineField = By.Id("PhoneNumber");
+        By MobileField = By.Id("Mobile");
+        By CancelBtn = By.Id("cancel-phone-link");
+        By SaveBttnPhoneNumbers = By.Id("btnSave");
+
+        // HomePageLogoIcon
+        By MandMHomePageLogoIcon = By.XPath("//img[@class='logo__svg MandMGBP']");
+
 
 
         //Actions
+        public CustomerAccountPage CustomerAccountWelcomeLink()
+        {
+            driver.FindElement(WelcomeLinkMyAccountPage).Click();
+            return new CustomerAccountPage(driver);
+        }
+
+        public CustomerAccountPage ClickOnMandMHomePageLogoIcon()
+        {
+            driver.FindElement(MandMHomePageLogoIcon).Click();
+            return new CustomerAccountPage(driver);
+        }
+
         public CustomerAccountPage ClickOnYesToConfirmDeleteRequest()
         {
             driver.FindElement(YesButtonDeleteConfirmation).Click();
@@ -207,6 +240,121 @@ namespace MandMdirectExampleProject.Pages.UserAccount
 
             return new CustomerAccountPage(driver);
         }
+
+
+
+
+
+        // actions for PhoneNumbers tab
+
+        //Phone Numbers elements
+ 
+        public CustomerAccountPage ClearLandLineField()
+        {
+            driver.FindElement(LandlineField).Clear();
+            return new CustomerAccountPage(driver);
+        }
+        public CustomerAccountPage ClearMobileField()
+        {
+            driver.FindElement(MobileField).Clear();
+            return new CustomerAccountPage(driver);
+        }
+
+        public CustomerAccountPage ClickOnTelephoneNumbersLink()
+        {
+            driver.FindElement(PhoneNumbers).Click();
+            return new CustomerAccountPage(driver);
+        }
+
+        public CustomerAccountPage ClickOnEditDetailsPhoneNumbers()
+        {
+            driver.FindElement(EditDetailsPhoneNumbersTab).Click();
+            return new CustomerAccountPage(driver);
+        }
+        public CustomerAccountPage PopulateLandLineFieldWithPhoneNumber()
+        {
+            driver.FindElement(LandlineField).Clear();
+            Thread.Sleep(1000);
+            driver.FindElement(LandlineField).SendKeys("0121000004");
+            return new CustomerAccountPage(driver);
+        }
+        public CustomerAccountPage PopulateMobileNumberFieldWithPhoneNumber()
+        {
+            driver.FindElement(MobileField).Clear();
+            Thread.Sleep(1000);
+            driver.FindElement(MobileField).SendKeys("07800000000");
+            return new CustomerAccountPage(driver);
+        }
+        public CustomerAccountPage cancelbuttonPhoneNumbers()
+        {
+            driver.FindElement(CancelBtn).Click();
+            return new CustomerAccountPage(driver);
+        }
+        public CustomerAccountPage SavebuttonPhoneNumbers()
+        {
+            driver.FindElement(SaveBttnPhoneNumbers).Click();
+            return new CustomerAccountPage(driver);
+        }
+
+
+        // Actions for Customer Name
+        public CustomerAccountPage ClickOnCustomerName()
+        {
+            driver.FindElement(CustomerName).Click();
+            return new CustomerAccountPage(driver);
+        }
+        public CustomerAccountPage ClickOnEditDetails()
+        {
+            driver.FindElement(EditDetails).Click();
+            return new CustomerAccountPage(driver);
+        }
+        public CustomerAccountPage UpdateTitleToMiss()
+        {
+            driver.FindElement(Title).Click();
+            Thread.Sleep(6000);
+            driver.FindElement(By.XPath("//option[@value='Mrs']")).Click();
+            Thread.Sleep(7000);
+            return new CustomerAccountPage(driver);
+        }
+        public CustomerAccountPage UpdateTitleToMrs()
+        {
+            driver.FindElement(Title).Click();
+            driver.FindElement(By.XPath("//option[@value='Miss']")).Click();
+            return new CustomerAccountPage(driver);
+        }
+
+
+        public CustomerAccountPage UpdateCustomerFirstName()
+        {
+            driver.FindElement(FirstName).Clear();
+            driver.FindElement(FirstName).SendKeys("James");
+            return new CustomerAccountPage(driver); 
+        }
+        public CustomerAccountPage UpdateCustomerLastName()
+        {
+            driver.FindElement(Surname).Clear();
+            driver.FindElement(Surname).SendKeys("Brown Davids");
+            return new CustomerAccountPage(driver);
+        }
+        public CustomerAccountPage ClickOnCancel()
+        {
+            driver.FindElement(CancelBtn).Click();
+            return new CustomerAccountPage(driver);
+        }
+        public CustomerAccountPage ClickOnSaveBttn()
+        {
+            driver.FindElement(SaveBttnPhoneNumbers).Click();
+            return new CustomerAccountPage(driver);
+        }
+        public CustomerAccountPage UpdateTitleToOther()
+        {
+            driver.FindElement(Title).Click();
+            Thread.Sleep(1000);
+            driver.FindElement(By.XPath("//option[@value='Other']")).Click();
+            Thread.Sleep(10000);
+            return new CustomerAccountPage(driver);
+        }
+
 
     }
 }

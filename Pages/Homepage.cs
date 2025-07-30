@@ -28,6 +28,7 @@ namespace MandMdirectExampleProject.Pages
         By LatestOffersBannerCancel = By.ClassName("close");
         By MyWishlistButton = By.ClassName("remnant__wishlist");
         By SearchButton = By.ClassName("aa-SubmitButton");
+        By SignOut = By.XPath("(//a[contains(text(),'Sign Out')])[1]");
 
 
 
@@ -36,7 +37,11 @@ namespace MandMdirectExampleProject.Pages
         //Implementing Absraction method which will perform the action on the webpage
         // and return the results of the action. 
 
-
+        public Homepage ClickOnSignOut()
+        {
+            driver.FindElement(SignOut).Click();
+            return new Homepage(driver);
+        }
         public WishlistPage ClickOnMyWishlistLink()
         {
             driver.FindElement(MyWishlistButton).Click();

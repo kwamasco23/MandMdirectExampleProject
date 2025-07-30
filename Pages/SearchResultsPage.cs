@@ -29,6 +29,7 @@ namespace MandMdirectExampleProject.Pages
         // Filter By Brand
         By FilterBrand = By.Id("filter_brand");
         By AdidasBrand = By.XPath("//span[contains(text(),'adidas')]");
+        By PumaBrand = By.XPath("//label[@for='brand_puma']");
         By AdidasSamba = By.XPath("//h2[contains(text(),' Mens Samba OG Trainers Core Black/​Footwear White/​Gum 5')]");
 
 
@@ -47,15 +48,55 @@ namespace MandMdirectExampleProject.Pages
         By BoysLink = By.XPath("//span[contains(text(),'Boys')]");
         By GirlsLink = By.XPath("//span[contains(text(),'Girls')]");
 
+        //Filters
+        By ProductType = By.ClassName("filter__heading active");
+        By RunningShoes = By.XPath("//label[contains(text(),'Running Shoes')]");
+
+        //Product to be selected
+        By PumaSoftrideProduct = By.XPath("(//h2[@class='product__title'])[15]");
+
         // Specific products tailored for test scenarios.
         By TedBakerPhyilipaTimelinesWatch = By.XPath("//h2[contains(text(),' Mens Phylipa Timeless Watch Silver Tone/​Black')]");
 
 
-        //Action by specific product selection
 
 
-      
 
+
+
+
+        //Actions
+
+
+        
+       
+
+       public ProductPage ClickOnPumaSoftrideProduct()
+        {
+            {
+                driver.FindElement(PumaSoftrideProduct);
+                return new ProductPage(driver);
+            }
+        }
+        public SearchResultsPage RunningShoesCheckBox()
+        {
+            {
+                driver.FindElement(RunningShoes).Click();
+                return new SearchResultsPage(driver);
+            }
+        }
+        public SearchResultsPage ProductTypeFilter()
+        {
+            {
+                driver.FindElement(ProductType).Click();
+                return new SearchResultsPage(driver);
+            }
+        }
+        public SearchResultsPage ClickOnPumaBrand()
+        {
+            driver.FindElement(PumaBrand).Click();
+            return new SearchResultsPage(driver);
+        }
         public SearchResultsPage ClickOnAdidasSamba()
         {
             driver.FindElement(AdidasSamba).Click();
