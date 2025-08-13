@@ -1,9 +1,14 @@
-using MandMdirectExampleProject.Pages;
-using MandMdirectExampleProject.Pages.UserAccount;
+using System;
+using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using System;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using TechTalk.SpecFlow;
+using MandMdirectExampleProject.Pages;
+using MandMdirectExampleProject.Pages.UserAccount;
+
+
 
 namespace MandMdirectExampleProject.StepDefinitions
 {
@@ -64,8 +69,8 @@ namespace MandMdirectExampleProject.StepDefinitions
             accountLoginPage = new AccountLoginPage(driver);
 
             accountLoginPage.TypeInUserPassword();
-            Thread.Sleep(3000);
-            accountLoginPage.ClickOnToggleViewPassword();
+            //Thread.Sleep(3000);
+            //accountLoginPage.ClickOnToggleViewPassword();
         }
 
         [When(@"User selects Continue")]

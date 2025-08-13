@@ -21,12 +21,13 @@ namespace MandMdirectExampleProject.Pages
 
 
         By SelectSizeDropDown = By.XPath("(//button[@class='attributes__toggle'])[1]");
-        By AddToBasketBttn = By.XPath("(//button[contains(text(),'Add To Basket')])[1]");
+        By AddToBasketBttn = By.XPath("(//button[contains(text(),'Add To Bag')])[1]");
         By AddToWishlist = By.ClassName("wishlist__btn");
         By ColourDropDown = By.XPath("(//DIV[@CLASS='attributes__menu'])[1]");
         By OneSizeSmartWatchSize = By.XPath("(//button[contains(text(),'One Size')])[1]");
         By AdidasSambaSize = By.XPath("(//button[@class='attributes__select'])[1]");
         By ReturnToSearchResults = By.Id("back");
+        By CloseModal = By.Id("atbClose");
 
 
         public ProductPage SelectAdidasSambaSize()
@@ -65,7 +66,14 @@ namespace MandMdirectExampleProject.Pages
             driver.FindElement(OneSizeSmartWatchSize).Click();
             return new ProductPage(driver); 
         }
+        public ProductPage ClickToCloseModalDialogue()
+        {
+            driver.FindElement(CloseModal).Click();
+            return new ProductPage(driver);
+        }
 
+
+        
 
 
     }

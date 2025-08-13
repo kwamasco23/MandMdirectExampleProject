@@ -1,9 +1,13 @@
 using MandMdirectExampleProject.Pages.UserAccount;
 using MandMdirectExampleProject.Pages;
 using OpenQA.Selenium;
+using System.Threading;
+using NUnit.Framework;
+
 using System;
 using TechTalk.SpecFlow;
-using NUnit.Framework;
+
+
 
 namespace MandMdirectExampleProject.StepDefinitions
 {
@@ -117,8 +121,9 @@ namespace MandMdirectExampleProject.StepDefinitions
         [Then(@"contacts should be removed from Phone Numbers field")]
         public void ThenContactsShouldBeRemovedFromPhoneNumbersField()
         {
-            Assert.True(0 == 0, "0121000004");
-            Assert.True(0 == 0, "07800000000");
+            Assert.IsTrue(0 == 0, "0121000004");
+            Assert.IsTrue(0 == 0, "07800000000");
+
         }
     }
 }

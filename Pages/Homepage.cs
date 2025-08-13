@@ -22,13 +22,14 @@ namespace MandMdirectExampleProject.Pages
 
         //defining webpage elements
         By MyAccountLink = By.Id("myaccount");
-        By SearchFieldInput = By.ClassName("aa-Input");
+        By SearchFieldInput = By.XPath("//input[@type='search']");
         //By SearchFieldHomePage = By.ClassName("aa-Input");
         By CookiesBannerAccept = By.Id("onetrust-accept-btn-handler");
         By LatestOffersBannerCancel = By.ClassName("close");
         By MyWishlistButton = By.ClassName("remnant__wishlist");
         By SearchButton = By.ClassName("aa-SubmitButton");
         By SignOut = By.XPath("(//a[contains(text(),'Sign Out')])[1]");
+        By MandMLogo = By.XPath("//img[@class='logo__svg MandMGBP']");
 
 
 
@@ -87,7 +88,11 @@ namespace MandMdirectExampleProject.Pages
             driver.FindElement(SearchButton).Click();
             return new SearchResultsPage(driver);
         }
-
+        public Homepage ClickOnHomePageMandMlogoIcon()
+        {
+            driver.FindElement(MandMLogo).Click();
+            return new Homepage(driver);
+        }
 
 
 

@@ -23,7 +23,7 @@ namespace MandMdirectExampleProject.Pages
         By RemoveIcon = By.XPath("(//button[contains(text(),'Remove')])[1]");
         By AddToBasket = By.ClassName("buyButton");
         By ContinueButton1 = By.XPath("(//button[contains(text(),'Continue')])[1]");
-        By ContinueButton2 = By.XPath("(//button[contains(text(),'Continue')])[2]");
+        By ContinueButton2 = By.XPath("(//button[contains(text(),'Continue')])[1]");
 
         public WishlistPage ClickOnContinueButton2()
         {

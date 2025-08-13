@@ -2,8 +2,11 @@ using MandMdirectExampleProject.Pages.UserAccount;
 using MandMdirectExampleProject.Pages;
 using OpenQA.Selenium;
 using System;
+using System.Threading;
 using TechTalk.SpecFlow;
 using NUnit.Framework;
+
+
 
 namespace MandMdirectExampleProject.StepDefinitions
 {
@@ -28,11 +31,12 @@ namespace MandMdirectExampleProject.StepDefinitions
 
         [When(@"User searches for Puma Softride trainers")]
         public void WhenUserSearchesForPumaSoftrideTrainers()
-        {
-             Homepage homepage = new Homepage(driver);
-             SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+        {     
+            Homepage homepage = new Homepage(driver);
+            SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
 
-
+            driver.FindElement(By.XPath("//input[@enterkeyhint='search']")).Click();
+            Thread.Sleep(1000);
             homepage.SearchFieldInputProductSearch();
             Thread.Sleep(2500);
             homepage.ClickOnSearchFieldSearchButton();

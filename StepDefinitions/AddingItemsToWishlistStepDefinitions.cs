@@ -1,12 +1,16 @@
+using System;
+using NUnit.Framework;
+using TechTalk.SpecFlow;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+
+using SeleniumExtras.WaitHelpers;
+using System.Threading;
 using MandMdirectExampleProject.Pages;
 using MandMdirectExampleProject.Pages.UserAccount;
-using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.BiDi.Modules.BrowsingContext;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
-using System;
-using TechTalk.SpecFlow;
+
+
+
 
 namespace MandMdirectExampleProject.StepDefinitions
 {
@@ -19,8 +23,8 @@ namespace MandMdirectExampleProject.StepDefinitions
         private IWebDriver driver;
         // create object of the pages so you can call the correct method
         Homepage homepage;
-        AccountLoginPage accountLoginPage;
-        CustomerAccountPage customerAccountPage;
+        //AccountLoginPage accountLoginPage;
+       // CustomerAccountPage customerAccountPage;
         WishlistPage wishlistPage;
 
 
@@ -49,7 +53,7 @@ namespace MandMdirectExampleProject.StepDefinitions
             Thread.Sleep(4000);
           
     
-    Thread.Sleep(3500);
+           Thread.Sleep(3500);
         }
 
         [Given(@"User searches for watches")]
@@ -78,28 +82,38 @@ namespace MandMdirectExampleProject.StepDefinitions
             Thread.Sleep(3500);
             productPage.ClickOnOneSizeFromSizeDropDownMenu();
             Thread.Sleep(3500);
-            productPage.ClickAddToWishlist();
-            Thread.Sleep(3500);
-            accountLoginPage.TypeInUserNameEmailAddress();
-            Thread.Sleep(3500);
-            accountLoginPage.TypeInUserPassword();
-            Thread.Sleep(3500);
-            accountLoginPage.ClickContinueToAccessCustomerAccount();
-            Thread.Sleep(3500);
+            //   productPage.ClickAddToWishlist();
+            //  Thread.Sleep(3500);
 
+            //
 
 
             //
-            productPage.clickSizeDropDownMenu();
-            Thread.Sleep(3500);
-            productPage.ClickOnOneSizeFromSizeDropDownMenu();
-            Thread.Sleep(3500);
-            productPage.ClickAddToWishlist();
+            // productPage.clickSizeDropDownMenu();
+            //  Thread.Sleep(3500);
+            // productPage.ClickOnOneSizeFromSizeDropDownMenu();
+            // Thread.Sleep(3500);
+            //  productPage.ClickAddToWishlist();
 
             //
+
+            
 
             productPage.ClickAddToBasket();
             Thread.Sleep(3500);
+            productPage.ClickToCloseModalDialogue();
+            Thread.Sleep(3000);
+
+            homepage.ClickOnMyAccount();
+            accountLoginPage.TypeInUserNameEmailAddress();
+            accountLoginPage.TypeInUserPassword();
+            Thread.Sleep(3500);
+           accountLoginPage.ClickContinueToAccessCustomerAccount();
+           Thread.Sleep(3500);
+
+            homepage.ClickOnHomePageMandMlogoIcon();
+            Thread.Sleep(3500);
+
             homepage.SearchForWatch();
             Thread.Sleep(3500);
             homepage.ClickOnSearchButton();
@@ -111,7 +125,7 @@ namespace MandMdirectExampleProject.StepDefinitions
            // productPage.ClickOnReturnToSearchResultsBttn();
             //Thread.Sleep(3500);
 
-            searchResultsPage.CLickOnLiverpoolKidsWatch();
+            searchResultsPage.CLickOnLadiesWatch();
             Thread.Sleep(3500);
             productPage.clickSizeDropDownMenu();
             Thread.Sleep(3500);
@@ -158,7 +172,7 @@ namespace MandMdirectExampleProject.StepDefinitions
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
             // Locate the element
-          By elementLocator = By.XPath("//h2[contains(text(),'DFND London Mens Faux Multi Dial Strap Watch Brown')]");
+          By elementLocator = By.XPath("//h2[contains(text(),' Womens Leather Strap Watch Blue')]");
 
            // Wait until the element is visible
             wait.Until(ExpectedConditions.ElementIsVisible(elementLocator));
@@ -176,12 +190,20 @@ namespace MandMdirectExampleProject.StepDefinitions
             wishlistPage = new WishlistPage(driver);
             wishlistPage.ClickOnRemoveIcon();
             Thread.Sleep(3500);
-            wishlistPage.ClickOnContinueButton();
-            Thread.Sleep(3500);
-            wishlistPage.ClickOnRemoveIcon();
-            Thread.Sleep(3500);
-            wishlistPage.ClickOnContinueButton2();
-            Thread.Sleep(3500);
+//            wishlistPage.ClickOnContinueButton();
+         //   Thread.Sleep(3500);
+         //   wishlistPage.ClickOnRemoveIcon();
+          //  Thread.Sleep(3500);
+          //  wishlistPage.ClickOnContinueButton();
+         //   Thread.Sleep(3500);
+
+            //wishlistPage.ClickOnRemoveIcon();
+            //Thread.Sleep(3500);
+            //wishlistPage.ClickOnContinueButton();
+            //Thread.Sleep(3500);
+//            driver.FindElement(By.XPath("//button[contains(text(),'Remove')]")).Click();
+       //     wishlistPage.ClickOnContinueButton();
+
         }
 
         [Then(@"Wishlist should be removed")]
@@ -191,12 +213,16 @@ namespace MandMdirectExampleProject.StepDefinitions
             IWebElement element = driver.FindElement(By.XPath("//div[@class='wishlist__empty']"));
 
             // Assert that the element is not displayed on the page
-            Assert.True(element.Displayed, "Revisit the code. The wishlist may contain some items");
+            Assert.IsTrue(element.Displayed, "Revisit the code. The wishlist may contain some items");
         }
+
+
+        
+
 
 
 
     }
 
-    
+
 }
