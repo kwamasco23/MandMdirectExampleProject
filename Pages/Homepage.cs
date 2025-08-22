@@ -22,7 +22,7 @@ namespace MandMdirectExampleProject.Pages
 
         //defining webpage elements
         By MyAccountLink = By.Id("myaccount");
-        By SearchFieldInput = By.XPath("//input[@type='search']");
+        By SearchFieldInput = By.XPath("//input[@placeholder='I am searching for...']");
         //By SearchFieldHomePage = By.ClassName("aa-Input");
         By CookiesBannerAccept = By.Id("onetrust-accept-btn-handler");
         By LatestOffersBannerCancel = By.ClassName("close");

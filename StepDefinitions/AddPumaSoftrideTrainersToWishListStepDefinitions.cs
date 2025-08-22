@@ -35,8 +35,8 @@ namespace MandMdirectExampleProject.StepDefinitions
             Homepage homepage = new Homepage(driver);
             SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
 
-            driver.FindElement(By.XPath("//input[@enterkeyhint='search']")).Click();
-            Thread.Sleep(1000);
+            //driver.FindElement(By.XPath("//input[@enterkeyhint='search']")).Click();
+            Thread.Sleep(5000);
             homepage.SearchFieldInputProductSearch();
             Thread.Sleep(2500);
             homepage.ClickOnSearchFieldSearchButton();
