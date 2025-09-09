@@ -1,0 +1,30 @@
+name: SpecFlow Tests CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest   # since SpecFlow uses Visual Studio + Selenium often
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'   # adjust to match your project SDK
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build solution
+      run: dotnet build --no-restore
+
+    - name: Run SpecFlow Tests
+      run: dotnet test --no-build --verbosity normal
+
