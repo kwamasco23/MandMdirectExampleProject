@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        // Ensure you have a DotNet SDK installed in Jenkins called "dotnet8"
+        dotnet 'dotnet8'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -8,47 +13,40 @@ pipeline {
             }
         }
 
-        stage('Restore') {
+        stage('Restore Dependencies') {
             steps {
-                script {
-                    docker.image('mcr.microsoft.com/dotnet/sdk:8.0').inside {
-                        bat 'dotnet restore'
-                    }
-                }
+                bat 'dotnet restore'
             }
         }
 
         stage('Build') {
             steps {
-                script {
-                    docker.image('mcr.microsoft.com/dotnet/sdk:8.0').inside {
-                        bat 'dotnet build --configuration Release --no-restore'
-                    }
-                }
+                bat 'dotnet build --configuration Release --no-restore'
             }
         }
 
-        stage('Test') {
+        stage('Run SpecFlow Tests') {
             steps {
-                script {
-                    docker.image('mcr.microsoft.com/dotnet/sdk:8.0').inside {
-                        bat 'dotnet test --no-build --verbosity normal'
-                    }
-                }
+                // Assumes your SpecFlow tests are set up in the solution
+                bat 'dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx"'
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: '**/bin/Release/**', allowEmptyArchive: true
-            junit '**/TestResults/*.xml'
+            // Archive test results and binaries
+            junit '**/TestResults/*.trx'
+            archiveArtifacts artifacts: '**/bin/Release/**/*', allowEmptyArchive: true
         }
         success {
-            echo 'Build and tests succeeded!'
+            echo "Build and tests succeeded!"
+            // Example for Slack/email notifications:
+            // slackSend channel: '#devops', message: "Build SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
         }
         failure {
-            echo 'Build or tests failed. Check logs!'
+            echo "Build or tests failed."
+            // slackSend channel: '#devops', message: "Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
         }
     }
 }
