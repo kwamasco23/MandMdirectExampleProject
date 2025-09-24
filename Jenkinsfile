@@ -1,9 +1,16 @@
+
 pipeline {
     agent any
 
     tools {
-        // Ensure you have a DotNet SDK installed in Jenkins called "dotnet8"
+        // Make sure you have a .NET SDK configured in Jenkins called 'dotnet8'
         dotnet 'dotnet8'
+    }
+
+    environment {
+        // Add your Slack Workspace credentials ID in Jenkins → Credentials
+        SLACK_CREDENTIALS = 'slack-token-id'
+        SLACK_CHANNEL = '#general' // or your preferred channel
     }
 
     stages {
@@ -13,7 +20,7 @@ pipeline {
             }
         }
 
-        stage('Restore Dependencies') {
+        stage('Restore') {
             steps {
                 bat 'dotnet restore'
             }
@@ -25,28 +32,37 @@ pipeline {
             }
         }
 
-        stage('Run SpecFlow Tests') {
+        stage('Test') {
             steps {
-                // Assumes your SpecFlow tests are set up in the solution
-                bat 'dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx"'
+                bat 'dotnet test --no-build --verbosity normal'
             }
         }
     }
 
     post {
         always {
-            // Archive test results and binaries
-            junit '**/TestResults/*.trx'
-            archiveArtifacts artifacts: '**/bin/Release/**/*', allowEmptyArchive: true
+            slackSend(
+                channel: env.SLACK_CHANNEL,
+                color: '#439FE0',
+                message: "Build #${env.BUILD_NUMBER} finished for ${env.JOB_NAME}. Check console output: ${env.BUILD_URL}",
+                tokenCredentialId: env.SLACK_CREDENTIALS
+            )
         }
         success {
-            echo "Build and tests succeeded!"
-            // Example for Slack/email notifications:
-            // slackSend channel: '#devops', message: "Build SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+            slackSend(
+                channel: env.SLACK_CHANNEL,
+                color: 'good',
+                message: "✅ Build #${env.BUILD_NUMBER} succeeded for ${env.JOB_NAME}.",
+                tokenCredentialId: env.SLACK_CREDENTIALS
+            )
         }
         failure {
-            echo "Build or tests failed."
-            // slackSend channel: '#devops', message: "Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+            slackSend(
+                channel: env.SLACK_CHANNEL,
+                color: 'danger',
+                message: "❌ Build #${env.BUILD_NUMBER} failed for ${env.JOB_NAME}. Check logs: ${env.BUILD_URL}",
+                tokenCredentialId: env.SLACK_CREDENTIALS
+            )
         }
     }
 }
