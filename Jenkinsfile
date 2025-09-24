@@ -3,8 +3,8 @@ pipeline {
     agent any
 
     environment {
-        SLACK_TOKEN = credentials('slack-token-id') 
-        SLACK_CHANNEL = '#all-devopspractice'                
+        SLACK_TOKEN = credentials('slack-token-id') // Jenkins secret ID for Slack token
+        SLACK_CHANNEL = '#general'                  // Slack channel
     }
 
     stages {
@@ -34,6 +34,14 @@ pipeline {
     }
 
     post {
+        success {
+            slackSend(
+                channel: "${env.SLACK_CHANNEL}",
+                color: 'good',
+                message: "Build Succeeded: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)",
+                tokenCredentialId: 'slack-token-id'
+            )
+        }
         failure {
             slackSend(
                 channel: "${env.SLACK_CHANNEL}",
