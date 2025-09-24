@@ -1,10 +1,9 @@
-
 pipeline {
     agent any
 
     environment {
-        SLACK_TOKEN = credentials('slack-token-id') // Jenkins secret ID for Slack token
-        SLACK_CHANNEL = '#general'                  // Slack channel
+        // Slack token stored in Jenkins Credentials (kind: Secret text)
+        SLACK_TOKEN = credentials('slack-token-id')
     }
 
     stages {
@@ -28,7 +27,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'dotnet test --no-build --verbosity normal'
+                bat 'dotnet test --no-build --configuration Release --verbosity normal'
             }
         }
     }
@@ -36,17 +35,18 @@ pipeline {
     post {
         success {
             slackSend(
-                channel: "${env.SLACK_CHANNEL}",
+                channel: '#general',
                 color: 'good',
-                message: "Build Succeeded: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)",
+                message: "SpecFlow CI Pipeline SUCCESS for branch ${env.BRANCH_NAME}",
                 tokenCredentialId: 'slack-token-id'
             )
         }
+
         failure {
             slackSend(
-                channel: "${env.SLACK_CHANNEL}",
+                channel: '#general',
                 color: 'danger',
-                message: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)",
+                message: "SpecFlow CI Pipeline FAILED for branch ${env.BRANCH_NAME}",
                 tokenCredentialId: 'slack-token-id'
             )
         }
