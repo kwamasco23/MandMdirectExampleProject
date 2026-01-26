@@ -21,7 +21,7 @@ namespace MandMdirectExampleProject.Pages
 
 
         By SelectSizeDropDown = By.XPath("(//button[@class='attributes__toggle'])[1]");
-        By AddToBasketBttn = By.XPath("(//button[contains(text(),'Add To Basket')])[1]");
+        By AddToBasketBttn = By.XPath("(//button[contains(text(),'Add To Bag')])[1]");
         By AddToWishlist = By.ClassName("wishlist__btn");
         By ColourDropDown = By.XPath("(//DIV[@CLASS='attributes__menu'])[1]");
         By OneSizeSmartWatchSize = By.XPath("(//button[contains(text(),'One Size')])[1]");

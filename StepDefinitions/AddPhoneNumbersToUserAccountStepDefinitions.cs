@@ -117,8 +117,8 @@ namespace MandMdirectExampleProject.StepDefinitions
         [Then(@"contacts should be removed from Phone Numbers field")]
         public void ThenContactsShouldBeRemovedFromPhoneNumbersField()
         {
-            Assert.True(0 == 0, "0121000004");
-            Assert.True(0 == 0, "07800000000");
+            Assert.That(0 == 0, "0121000004");
+            Assert.That(0 == 0, "07800000000");
         }
     }
 }

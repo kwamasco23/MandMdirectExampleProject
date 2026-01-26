@@ -145,8 +145,8 @@ namespace MandMdirectExampleProject.StepDefinitions
             CustomerAccountPage customerAccountPage = new CustomerAccountPage(driver);
 
 
-            string actualvalue = driver.FindElement(By.XPath("//span[contains(text(),'90, Ardwick Green North, M12 6fx')]")).Text;
-            Assert.IsTrue(actualvalue.Contains("90, Ardwick Green North, M12 6fx"), actualvalue + " doesn't contain '90, Ardwick Green North, M12 6fx'");
+            string actualvalue = driver.FindElement(By.XPath("//div[contains(text(),'90, Ardwick Green North, M12 6fx')]")).Text;
+            Assert.That(actualvalue.Contains("90, Ardwick Green North, M12 6fx"), actualvalue + " doesn't contain '90, Ardwick Green North, M12 6fx'");
 
 
 

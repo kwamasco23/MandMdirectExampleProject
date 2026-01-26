@@ -32,30 +32,30 @@ namespace MandMdirectExampleProject.Pages.UserAccount
         By WelcomeLinkMyAccountPage = By.XPath("//a[contains(text(),'Welcome')]");
 
         // Elements for Delivery Addresses 
-        By DeliveryAddresses = By.XPath("//a[contains(text(),'Delivery Addresses')]");
-        By DeleteDeliveryAddressesBtn1 = By.XPath("(//a[contains(text(),'Delete')])[1]");
-        By DeleteDeliveryAddressesBtn2 = By.XPath("(//a[contains(text(),'Delete')])[2]");
-        By EditDeliveryAddressesBtn1 = By.Id("edit-name-link");
-        By EditDeliveryAddressBtn2 = By.XPath("(//a[@id='edit-delivery-link'])[2]");
-        By AddressLine1Field = By.XPath("//input[@placeholder='Address line 1']");
-        By AddressLine2Field = By.XPath("//input[@placeholder='Address line 2']");
-        By AddressLine3Field = By.XPath("//input[@placeholder='Address line 3']");
-        By TownField = By.XPath("//input[@placeholder='town']");
-        By CountyField = By.XPath("//input[@placeholder='County']");
-        By PostCodeField1 = By.Id("Address_PostCode");
-        By PostCodeField2 = By.Id("FindAddress_PostCode");
-        By LookUpPostCodeLink = By.ClassName("returnToPostCode");
-        By FindMyAddressBtn = By.Id("find_address_btn");
+        By DeliveryAddresses = By.XPath("//Span[contains(text(),'Delivery Addresses')]");
+        By DeleteDeliveryAddressesBtn1 = By.XPath("//button[contains(text(),'Delete')]");
+        By DeleteDeliveryAddressesBtn2 = By.XPath("(//button[contains(text(),'Delete')])[1]");
+        By EditDeliveryAddressesBtn1 = By.XPath("//button[contains(text(),'Edit')]");
+        By EditDeliveryAddressBtn2 = By.XPath("//button[contains(text(),'Edit')]");
+        By AddressLine1Field = By.Id("addressLine1");
+        By AddressLine2Field = By.Id("addressLine2");
+        By AddressLine3Field = By.Id("addressLine3");
+        By TownField = By.Id("addressTown");
+        By CountyField = By.Id("addressCounty");
+        By PostCodeField1 = By.XPath("//input[@name='Address.Postcode']");
+        By PostCodeField2 = By.XPath("//input[@name='postcode']");
+        By LookUpPostCodeLink = By.XPath("//a[contains(text(),'Use Postcode Lookup')]");
+        By FindMyAddressBtn = By.XPath("//button[contains(text(),'Find my Address')]");
         By CanterburyStreetAddressFromPostCodeSearch = By.XPath("(//a[contains(text(),'2 Canterbury Street,Ashton-under-Lyne, OL6 6HY')])[3]");
-        By SaveButton = By.Id("btnSave");
-        By CancelButton = By.Id("CancelBtn");
-        By NewDeliveryAddress = By.Id("new-delivery-link");
-        By YesButtonDeleteConfirmation = By.Id("delete-confirmation-yes");
+        By SaveButton = By.XPath("//button[contains(text(),'Save')]");
+        By CancelButton = By.Id("ma__cancel-btn");
+        By NewDeliveryAddress = By.Id("addAddress");
+        By YesButtonDeleteConfirmation = By.Id("confirmDeleteAddress");
 
 
         // Customer Name elements
-        By CustomerName = By.XPath("//a[contains(text(),'Customer Name')]");
-        By EditDetails = By.Id("edit-name-link");
+        By CustomerName = By.XPath("//span[contains(text(),'Customer Name')]");
+        By EditDetails = By.Id("ma__edit-btn");
         By Title = By.XPath("//select[@id='Salutation']");
         By FirstName = By.XPath("//input[@id='FirstName']");
         By Surname = By.XPath("//input[@id='Surname']");
@@ -64,15 +64,15 @@ namespace MandMdirectExampleProject.Pages.UserAccount
 
 
         //Phone Numbers elements
-        By PhoneNumbers = By.XPath("//a[contains(text(),'Phone Numbers')]");
-        By EditDetailsPhoneNumbersTab = By.Id("edit-phone-link");
+        By PhoneNumbers = By.XPath("//Span[contains(text(),'Phone Numbers')]");
+        By EditDetailsPhoneNumbersTab = By.Id("ma__edit-btn");
         By LandlineField = By.Id("PhoneNumber");
         By MobileField = By.Id("Mobile");
         By CancelBtn = By.Id("cancel-phone-link");
-        By SaveBttnPhoneNumbers = By.Id("btnSave");
+        By SaveBttnPhoneNumbers = By.Id("ma__save-btn");
 
         // HomePageLogoIcon
-        By MandMHomePageLogoIcon = By.XPath("//img[@class='logo__svg MandMGBP']");
+        By MandMHomePageLogoIcon = By.ClassName("ma-header__logo");
 
 
 
