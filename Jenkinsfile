@@ -1,15 +1,11 @@
-pipeline {
+﻿pipeline {
     agent any
-
-    environment {
-        // Slack token stored in Jenkins Credentials (kind: Secret text)
-        SLACK_TOKEN = credentials('slack-token-id')
-    }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/kwamasco23/MandMdirectExampleProject.git'
+                git branch: 'main',
+                    url: 'https://github.com/kwamasco23/MandMdirectExampleProject.git'
             }
         }
 
@@ -27,28 +23,27 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'dotnet test --no-build --configuration Release --verbosity normal'
+                bat '''
+                dotnet test ^
+                  --no-build ^
+                  --configuration Release ^
+                  --logger "nunit;LogFilePath=TestResults\\nunit-results.xml"
+                '''
+            }
+            post {
+                always {
+                    junit 'TestResults/**/*.xml'
+                }
             }
         }
     }
 
     post {
         success {
-            slackSend(
-                channel: '#general',
-                color: 'good',
-                message: "SpecFlow CI Pipeline SUCCESS for branch ${env.BRANCH_NAME}",
-                tokenCredentialId: 'slack-token-id'
-            )
+            echo '✅ CI pipeline completed successfully'
         }
-
         failure {
-            slackSend(
-                channel: '#general',
-                color: 'danger',
-                message: "SpecFlow CI Pipeline FAILED for branch ${env.BRANCH_NAME}",
-                tokenCredentialId: 'slack-token-id'
-            )
+            echo '❌ CI pipeline failed'
         }
     }
 }
