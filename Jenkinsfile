@@ -10,30 +10,29 @@ pipeline {
         }
 
         stage('Restore') {
-    steps {
-        sh 'dotnet restore'
-    }
-}
-
+            steps {
+                sh 'dotnet restore'
+            }
+        }
 
         stage('Build') {
             steps {
-                bat 'dotnet build --configuration Release --no-restore'
+                sh 'dotnet build --configuration Release --no-restore'
             }
         }
 
         stage('Test') {
             steps {
-                bat '''
-                dotnet test ^
-                  --no-build ^
-                  --configuration Release ^
-                  --logger "nunit;LogFilePath=TestResults\\nunit-results.xml"
+                sh '''
+                dotnet test \
+                  --no-build \
+                  --configuration Release \
+                  --logger "trx;LogFileName=test-results.trx"
                 '''
             }
             post {
                 always {
-                    junit 'TestResults/**/*.xml'
+                    junit '**/*.trx'
                 }
             }
         }
@@ -48,3 +47,4 @@ pipeline {
         }
     }
 }
+
