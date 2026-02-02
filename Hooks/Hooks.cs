@@ -9,7 +9,7 @@ namespace MandMdirectExampleProject.Hooks
     public sealed class Hooks
     {
         private readonly IObjectContainer _container;
-        private IWebDriver _driver;
+        private IWebDriver? _driver;
 
         public Hooks(IObjectContainer container)
         {
@@ -21,46 +21,26 @@ namespace MandMdirectExampleProject.Hooks
         {
             var options = new ChromeOptions();
 
-            // Always safe for local + CI
+            // Jenkins / CI safe defaults
             options.AddArgument("--headless=new");
             options.AddArgument("--no-sandbox");
             options.AddArgument("--disable-dev-shm-usage");
-            options.AddArgument("--disable-gpu");
             options.AddArgument("--window-size=1920,1080");
 
             // Block browser notifications
             options.AddUserProfilePreference(
-                "profile.default_content_setting_values.notifications", 2);
+                "profile.default_content_setting_values.notifications", 2
+            );
 
             _driver = new ChromeDriver(options);
-
-            // VERY important for CI stability
-            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-
             _container.RegisterInstanceAs<IWebDriver>(_driver);
         }
 
-       
-        
-            [AfterScenario]
-            public void AfterScenario(ScenarioContext scenarioContext)
-            {
-                if (scenarioContext.TestError != null && _driver is ITakesScreenshot ts)
-                {
-                    var screenshot = ts.GetScreenshot();
-                    var fileName = $"screenshot_{scenarioContext.ScenarioInfo.Title}.png"
-                        .Replace(" ", "_");
-
-                    var path = Path.Combine(
-                        Directory.GetCurrentDirectory(),
-                        "TestResults",
-                        fileName);
-
-                    screenshot.SaveAsFile(path);
-                }
-
-                _driver?.Quit();
-            }
+        [AfterScenario]
+        public void AfterScenario()
+        {
+            _driver?.Quit();
+            _driver?.Dispose();
         }
     }
-
+}
