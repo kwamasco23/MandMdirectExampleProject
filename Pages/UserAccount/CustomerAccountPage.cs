@@ -32,47 +32,47 @@ namespace MandMdirectExampleProject.Pages.UserAccount
         By WelcomeLinkMyAccountPage = By.XPath("//a[contains(text(),'Welcome')]");
 
         // Elements for Delivery Addresses 
-        By DeliveryAddresses = By.XPath("//a[contains(text(),'Delivery Addresses')]");
-        By DeleteDeliveryAddressesBtn1 = By.XPath("(//a[contains(text(),'Delete')])[1]");
-        By DeleteDeliveryAddressesBtn2 = By.XPath("(//a[contains(text(),'Delete')])[2]");
-        By EditDeliveryAddressesBtn1 = By.Id("edit-name-link");
-        By EditDeliveryAddressBtn2 = By.XPath("(//a[@id='edit-delivery-link'])[2]");
-        By AddressLine1Field = By.XPath("//input[@placeholder='Address line 1']");
-        By AddressLine2Field = By.XPath("//input[@placeholder='Address line 2']");
-        By AddressLine3Field = By.XPath("//input[@placeholder='Address line 3']");
-        By TownField = By.XPath("//input[@placeholder='town']");
+        By DeliveryAddresses = By.XPath("//span[contains(text(),'Delivery Addresses')]");
+        By DeleteDeliveryAddressesBtn1 = By.XPath("//button[contains(text(),'Delete')]");
+        By DeleteDeliveryAddressesBtn2 = By.XPath("//button[contains(text(),'Delete')]");
+        By EditDeliveryAddressesBtn1 = By.XPath("//button[contains(text(),'Edit')]");
+        By EditDeliveryAddressBtn2 = By.XPath("//button[contains(text(),'Edit')]");
+        By AddressLine1Field = By.Id("addressLine1");
+        By AddressLine2Field = By.Id("addressLine2");
+        By AddressLine3Field = By.Id("addressLine3");
+        By TownField = By.Id("addressTown");
         By CountyField = By.XPath("//input[@placeholder='County']");
-        By PostCodeField1 = By.Id("Address_PostCode");
+        By PostCodeField1 = By.Id("addressPostcode");
         By PostCodeField2 = By.Id("FindAddress_PostCode");
-        By LookUpPostCodeLink = By.ClassName("returnToPostCode");
-        By FindMyAddressBtn = By.Id("find_address_btn");
-        By CanterburyStreetAddressFromPostCodeSearch = By.XPath("(//a[contains(text(),'2 Canterbury Street,Ashton-under-Lyne, OL6 6HY')])[3]");
-        By SaveButton = By.Id("btnSave");
+        By LookUpPostCodeLink = By.ClassName("ma__delivery-lookup-toggle");
+        By FindMyAddressBtn = By.Id("findAddressBtn");
+        By CanterburyStreetAddressFromPostCodeSearch = By.XPath("(//a[contains(text(),'2 Canterbury Street,Ashton-under-Lyne, OL6 6HY')])[1]");
+        By SaveButton = By.Id("ma__save-btn");
         By CancelButton = By.Id("CancelBtn");
-        By NewDeliveryAddress = By.Id("new-delivery-link");
-        By YesButtonDeleteConfirmation = By.Id("delete-confirmation-yes");
+        By AddNewDeliveryAddress = By.Id("addAddress");
+        By YesButtonDeleteConfirmation = By.Id("confirmDeleteAddress");
 
 
         // Customer Name elements
-        By CustomerName = By.XPath("//a[contains(text(),'Customer Name')]");
-        By EditDetails = By.Id("edit-name-link");
-        By Title = By.XPath("//select[@id='Salutation']");
-        By FirstName = By.XPath("//input[@id='FirstName']");
-        By Surname = By.XPath("//input[@id='Surname']");
-        By Cancel = By.XPath("//input[@id='cancel']");
-        By SaveBtnCustomerName = By.XPath("//input[@id='btnSave']");
+        By CustomerName = By.XPath("//span[contains(text(),'Customer Name')]");
+        By EditDetails = By.Id("ma__edit-btn");
+        By Title = By.Id("Salutation");
+        By FirstName = By.Id("FirstName");
+        By Surname = By.Id("Surname");
+        By Cancel = By.Id("ma__cancel-btn");
+        By SaveBtnCustomerName = By.Id("ma__save-btn");
 
 
         //Phone Numbers elements
-        By PhoneNumbers = By.XPath("//a[contains(text(),'Phone Numbers')]");
-        By EditDetailsPhoneNumbersTab = By.Id("edit-phone-link");
+        By PhoneNumbers = By.XPath("//span[contains(text(),'Phone Numbers')]");
+        By EditDetailsPhoneNumbersTab = By.Id("ma__edit-btn");
         By LandlineField = By.Id("PhoneNumber");
         By MobileField = By.Id("Mobile");
-        By CancelBtn = By.Id("cancel-phone-link");
-        By SaveBttnPhoneNumbers = By.Id("btnSave");
+        By CancelBtn = By.Id("ma__cancel-btn");
+        By SaveBttnPhoneNumbers = By.Id("ma__save-btn");
 
         // HomePageLogoIcon
-        By MandMHomePageLogoIcon = By.XPath("//img[@class='logo__svg MandMGBP']");
+        By MandMHomePageLogoIcon = By.XPath("//img[@alt='MandM logo']");
 
 
 
@@ -111,7 +111,7 @@ namespace MandMdirectExampleProject.Pages.UserAccount
         }
         public CustomerAccountPage ClickOnNewDeliveryAddress()
         {
-            driver.FindElement(NewDeliveryAddress).Click();
+            driver.FindElement(AddNewDeliveryAddress).Click();
             return new CustomerAccountPage(driver);
         }
         public CustomerAccountPage ClickOnDeliveryAddresses()
@@ -343,7 +343,7 @@ namespace MandMdirectExampleProject.Pages.UserAccount
         }
         public CustomerAccountPage ClickOnSaveBttn()
         {
-            driver.FindElement(SaveBttnPhoneNumbers).Click();
+            driver.FindElement(SaveBtnCustomerName).Click();
             return new CustomerAccountPage(driver);
         }
         public CustomerAccountPage UpdateTitleToOther()

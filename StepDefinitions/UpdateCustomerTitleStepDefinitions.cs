@@ -71,7 +71,7 @@ namespace MandMdirectExampleProject.StepDefinitions
         public void WhenUserClicksEditDetails()
         {
             customerAccountPage = new CustomerAccountPage(driver);
-            customerAccountPage.ClickOnEditDeliveryAddressesBtn();
+            customerAccountPage.ClickOnEditDetails();
             Thread.Sleep(6000);
         }
 

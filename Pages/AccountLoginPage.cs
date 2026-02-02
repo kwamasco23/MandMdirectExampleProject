@@ -25,7 +25,7 @@ namespace MandMdirectExampleProject.Pages
         By EmailAddressField = By.Id("EmailAddress");
         By PasswordField = By.Id("Password");
         By ContinueButton = By.XPath("//button[contains(text(),'Continue')]");
-        By ToggleViewPassword = By.XPath("//div[@id='togglePassword']");
+        By ToggleViewPassword = By.ClassName("password-box__toggle");
 
 
 
@@ -35,7 +35,7 @@ namespace MandMdirectExampleProject.Pages
 
         public AccountLoginPage TypeInUserNameEmailAddress()
         {
-            driver.FindElement(EmailAddressField).SendKeys("mandymansa@fastmail.com");
+            driver.FindElement(EmailAddressField).SendKeys("zzz04824@toaik.com");
             return new AccountLoginPage(driver);
         }
         public Homepage ClickOnToggleViewPassword()
@@ -46,7 +46,7 @@ namespace MandMdirectExampleProject.Pages
 
         public AccountLoginPage TypeInUserPassword()
         {
-            driver.FindElement(PasswordField).SendKeys("Password001");
+            driver.FindElement(PasswordField).SendKeys("Password@002");
             return new AccountLoginPage(driver);
         }
 

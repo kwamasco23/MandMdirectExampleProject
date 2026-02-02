@@ -23,7 +23,7 @@ namespace MandMdirectExampleProject.Pages
         // Standard & Smart watch search 
         By ReflexActiveSmartWatchOne = By.XPath("//h2[contains(text(),' Series 13 Smart Watch And True Wireless Sound Earbuds Gift Set Black')]");
         By ReflexActiveSmartWatchTwo = By.XPath("//h2[contains(text(),' Womens Series 13 Smart Watch And True Wireless Sound Earbuds Gift Set Pink/​White')]");
-        By DFNDlondonWatch = By.XPath("//h2[contains(text(),' Mens Faux Multi Dial Strap Watch Brown')]");
+        By DFNDlondonWatch = By.XPath("(//h2[@class='product__title'])[1]");
         By LiverpoolKidsWatch = By.XPath("//h2[contains(text(),' Kids Football Club LED Watch Black')]");
 
         // Filter By Brand
@@ -49,7 +49,7 @@ namespace MandMdirectExampleProject.Pages
         By GirlsLink = By.XPath("//span[contains(text(),'Girls')]");
 
         //Filters
-        By ProductType = By.ClassName("filter__heading active");
+        By ProductType = By.Id("//details[@id='filter_producttype']");
         By RunningShoes = By.XPath("//label[contains(text(),'Running Shoes')]");
 
         //Product to be selected

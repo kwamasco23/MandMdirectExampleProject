@@ -28,7 +28,7 @@ namespace MandMdirectExampleProject.Pages
         By LatestOffersBannerCancel = By.ClassName("close");
         By MyWishlistButton = By.ClassName("remnant__wishlist");
         By SearchButton = By.ClassName("aa-SubmitButton");
-        By SignOut = By.XPath("(//a[contains(text(),'Sign Out')])[1]");
+        By SignOut = By.ClassName("logoutlink");
 
 
 

@@ -95,13 +95,13 @@ namespace MandMdirectExampleProject.StepDefinitions
 
             // Asserting text on screen
             // Locate the element containing the text
-            IWebElement element = driver.FindElement(By.XPath("//h1[contains(text(),'Welcome to My MandM')]"));
+            IWebElement element = driver.FindElement(By.XPath("//h1[contains(text(),'My Account')]"));
 
             // Retrieve the text of the element
             string actualText = element.Text;
 
             // Define the expected text
-            string expectedText = "Welcome to My MandM";
+            string expectedText = "My Account";
 
             // Assert that the actual text is equal to the expected text
             Assert.AreEqual(expectedText, actualText, "The text on the page did not match the expected value.");
