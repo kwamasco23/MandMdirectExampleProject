@@ -23,7 +23,19 @@ namespace MandMdirectExampleProject.Hooks
         [BeforeScenario("@tag1")]
         public void BeforeScenarioWithTag()
         {
-            //Running tag based test cases/features
+            //adding this to ensure that tests run on Jenkins chrome headless (no GUI)
+
+            var options = new ChromeOptions();
+
+            // Headless Chrome for CI (Linux / Jenkins)
+            options.AddArgument("--headless=new");
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-dev-shm-usage");
+            options.AddArgument("--window-size=1920,1080");
+
+            IWebDriver driver = new ChromeDriver(options);
+
+            _container.RegisterInstanceAs<IWebDriver>(driver);
         }
 
         [BeforeScenario(Order = 1)]
