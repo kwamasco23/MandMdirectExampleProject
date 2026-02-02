@@ -37,6 +37,7 @@ namespace MandMdirectExampleProject.StepDefinitions
             driver.Url = "https://www.mandmdirect.com/";
             driver.Manage().Window.FullScreen();
             Thread.Sleep(3000);
+            Console.WriteLine(driver.PageSource);
             driver.FindElement(By.Id("onetrust-accept-btn-handler")).Click();
             Thread.Sleep(6000);
         }

@@ -40,10 +40,27 @@ namespace MandMdirectExampleProject.Hooks
             _container.RegisterInstanceAs<IWebDriver>(_driver);
         }
 
-        [AfterScenario]
-        public void AfterScenario()
-        {
-            _driver?.Quit();
+       
+        
+            [AfterScenario]
+            public void AfterScenario(ScenarioContext scenarioContext)
+            {
+                if (scenarioContext.TestError != null && _driver is ITakesScreenshot ts)
+                {
+                    var screenshot = ts.GetScreenshot();
+                    var fileName = $"screenshot_{scenarioContext.ScenarioInfo.Title}.png"
+                        .Replace(" ", "_");
+
+                    var path = Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "TestResults",
+                        fileName);
+
+                    screenshot.SaveAsFile(path);
+                }
+
+                _driver?.Quit();
+            }
         }
     }
-}
+
