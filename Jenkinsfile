@@ -22,7 +22,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                dotnet test --configuration Release --logger "console;verbosity=detailed"
+                dotnet test --configuration Release --no-build --logger trx
             }
         }
     }
