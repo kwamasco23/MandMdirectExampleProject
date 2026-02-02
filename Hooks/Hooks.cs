@@ -8,62 +8,42 @@ namespace MandMdirectExampleProject.Hooks
     [Binding]
     public sealed class Hooks
     {
-
-
-        // define inernal reference variable
         private readonly IObjectContainer _container;
-        
-        //constructor
+        private IWebDriver _driver;
+
         public Hooks(IObjectContainer container)
         {
             _container = container;
         }
 
-
-        [BeforeScenario("@tag1")]
-        public void BeforeScenarioWithTag()
+        [BeforeScenario]
+        public void BeforeScenario()
         {
-            //adding this to ensure that tests run on Jenkins chrome headless (no GUI)
-
             var options = new ChromeOptions();
 
-            // Headless Chrome for CI (Linux / Jenkins)
+            // Always safe for local + CI
             options.AddArgument("--headless=new");
             options.AddArgument("--no-sandbox");
             options.AddArgument("--disable-dev-shm-usage");
+            options.AddArgument("--disable-gpu");
             options.AddArgument("--window-size=1920,1080");
 
-            IWebDriver driver = new ChromeDriver(options);
+            // Block browser notifications
+            options.AddUserProfilePreference(
+                "profile.default_content_setting_values.notifications", 2);
 
-            _container.RegisterInstanceAs<IWebDriver>(driver);
+            _driver = new ChromeDriver(options);
+
+            // VERY important for CI stability
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
+            _container.RegisterInstanceAs<IWebDriver>(_driver);
         }
-
-        [BeforeScenario(Order = 1)]
-        public void FirstBeforeScenario()
-        {
-            var options = new ChromeOptions();
-            // Configure browser to block notifications
-            options.AddUserProfilePreference("profile.default_content_setting_values.notifications", 2);
-
-            // Pass options to ChromeDriver
-            IWebDriver driver = new ChromeDriver(options);
-            //driver.Manage().Window.Maximize();
-            driver.Manage().Window.FullScreen();
-
-            // Register the WebDriver instance for dependency injection
-            _container.RegisterInstanceAs<IWebDriver>(driver);
-        }
-
 
         [AfterScenario]
         public void AfterScenario()
         {
-            var driver = _container.Resolve<IWebDriver>();
-
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
         }
     }
 }
