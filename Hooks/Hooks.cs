@@ -1,7 +1,8 @@
-﻿using BoDi;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using TechTalk.SpecFlow;
+using BoDi;
+using System;
 
 namespace MandMdirectExampleProject.Hooks
 {
@@ -19,54 +20,46 @@ namespace MandMdirectExampleProject.Hooks
         [BeforeScenario]
         public void FirstBeforeScenario()
         {
-            var options = new ChromeOptions();
-
-            // Detect CI environment (Jenkins sets JENKINS_HOME, BUILD_NUMBER, or CI variable)
-            var isCi = Environment.GetEnvironmentVariable("CI") == "true"
-                       || Environment.GetEnvironmentVariable("JENKINS_HOME") != null
-                       || Environment.GetEnvironmentVariable("BUILD_NUMBER") != null;
-
-            if (isCi)
-            {
-                // Jenkins / CI safe defaults
-                options.AddArgument("--headless=new");
-                options.AddArgument("--no-sandbox");
-                options.AddArgument("--disable-dev-shm-usage");
-                options.AddArgument("--disable-gpu");
-                options.AddArgument("--window-size=1920,1080");
-                options.AddArgument("--disable-extensions");
-                options.AddArgument("--disable-web-security");
-                options.AddArgument("--ignore-certificate-errors");
-
-                Console.WriteLine("Running in CI mode (headless)");
-            }
-            else
-            {
-                // Local development
-                options.AddArgument("--start-maximized");
-
-                Console.WriteLine("Running in local mode (headed)");
-            }
-
-            // Common options for both environments
-            options.AddArgument("--disable-blink-features=AutomationControlled");
-            options.AddUserProfilePreference("profile.default_content_setting_values.notifications", 2);
-            options.AddUserProfilePreference("credentials_enable_service", false);
-            options.AddUserProfilePreference("profile.password_manager_enabled", false);
-
             try
             {
+                // Detect if running in CI environment
+                bool isCI = IsRunningInCI();
+                Console.WriteLine($"[Hooks] Running in CI: {isCI}");
+
+                var options = new ChromeOptions();
+
+                if (isCI)
+                {
+                    // CI Environment - Headless mode
+                    Console.WriteLine("[Hooks] Configuring Chrome for CI (headless mode)");
+                    options.AddArgument("--headless=new");
+                    options.AddArgument("--no-sandbox");
+                    options.AddArgument("--disable-dev-shm-usage");
+                    options.AddArgument("--disable-gpu");
+                    options.AddArgument("--window-size=1920,1080");
+                    options.AddArgument("--disable-extensions");
+                    options.AddArgument("--disable-software-rasterizer");
+                }
+                else
+                {
+                    // Local Development - Visible browser
+                    Console.WriteLine("[Hooks] Configuring Chrome for local development (visible mode)");
+                    options.AddArgument("--start-maximized");
+                }
+
                 _driver = new ChromeDriver(options);
+
+                // Configure timeouts
                 _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
 
                 _container.RegisterInstanceAs<IWebDriver>(_driver);
-
-                Console.WriteLine("WebDriver initialized successfully");
+                Console.WriteLine("[Hooks] WebDriver initialized successfully");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Failed to initialize WebDriver: {ex.Message}");
+                Console.WriteLine($"[Hooks] ERROR initializing WebDriver: {ex.Message}");
+                Console.WriteLine($"[Hooks] Stack trace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -78,17 +71,28 @@ namespace MandMdirectExampleProject.Hooks
             {
                 if (_driver != null)
                 {
+                    Console.WriteLine("[Hooks] Closing WebDriver");
                     _driver.Quit();
                     _driver.Dispose();
                     _driver = null;
-
-                    Console.WriteLine("WebDriver closed successfully");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error during WebDriver cleanup: {ex.Message}");
+                Console.WriteLine($"[Hooks] ERROR during cleanup: {ex.Message}");
             }
+        }
+
+        private bool IsRunningInCI()
+        {
+            // Check multiple CI environment indicators
+            var ciEnv = Environment.GetEnvironmentVariable("CI");
+            var jenkinsHome = Environment.GetEnvironmentVariable("JENKINS_HOME");
+            var buildNumber = Environment.GetEnvironmentVariable("BUILD_NUMBER");
+
+            return !string.IsNullOrEmpty(ciEnv) ||
+                   !string.IsNullOrEmpty(jenkinsHome) ||
+                   !string.IsNullOrEmpty(buildNumber);
         }
     }
 }
