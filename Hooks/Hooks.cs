@@ -32,6 +32,9 @@ namespace MandMdirectExampleProject.Hooks
 
             if (isCI)
             {
+                // ⚡ Important: Set the path to Chrome binary on EC2
+                options.BinaryLocation = "/usr/bin/google-chrome";
+
                 options.AddArgument("--headless=new");
                 options.AddArgument("--no-sandbox");
                 options.AddArgument("--disable-dev-shm-usage");
@@ -42,9 +45,10 @@ namespace MandMdirectExampleProject.Hooks
                 options.AddArgument("--start-maximized");
             }
 
-            // 🔑 Selenium Manager handles driver matching automatically
+            // 🔑 Selenium Manager handles ChromeDriver automatically
             _driver = new ChromeDriver(options);
 
+            // Set timeouts
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
 
@@ -56,9 +60,16 @@ namespace MandMdirectExampleProject.Hooks
         {
             if (_container.IsRegistered<IWebDriver>())
             {
-                var driver = _container.Resolve<IWebDriver>();
-                driver.Quit();
-                driver.Dispose();
+                try
+                {
+                    var driver = _container.Resolve<IWebDriver>();
+                    driver.Quit();
+                    driver.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error during WebDriver cleanup: {ex.Message}");
+                }
             }
         }
     }
