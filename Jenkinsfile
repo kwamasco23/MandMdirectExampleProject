@@ -1,42 +1,51 @@
 ﻿pipeline {
-    agent any
-    
+    agent {
+        docker {
+            image 'selenium/standalone-chrome:latest'
+            args '-u root --shm-size=2g'
+        }
+    }
+
     environment {
+        DOTNET_CLI_TELEMETRY_OPTOUT = '1'
         CI = 'true'
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/kwamasco23/MandMdirectExampleProject.git'
+                checkout scm
             }
         }
+
         stage('Restore') {
             steps {
                 sh 'dotnet restore'
             }
         }
+
         stage('Build') {
             steps {
-                sh 'dotnet build --configuration Release --no-restore'
+                sh 'dotnet build --configuration Release'
             }
         }
+
         stage('Test') {
             steps {
-                sh 'dotnet test --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"'
+                sh 'dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx"'
             }
         }
     }
-    
+
     post {
         always {
             junit '**/TestResults/*.trx'
         }
-        success {
-            echo '✅ CI pipeline succeeded'
-        }
         failure {
             echo '❌ CI pipeline failed'
+        }
+        success {
+            echo '✅ All tests passed'
         }
     }
 }
