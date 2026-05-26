@@ -29,6 +29,7 @@ namespace MandMdirectExampleProject.Pages
         By MyWishlistButton = By.ClassName("remnant__wishlist");
         By SearchButton = By.ClassName("aa-SubmitButton");
         By SignOut = By.ClassName("logoutlink");
+        By HelpAndContactUS = By.XPath("(//a[contains(text(),'Help Centre')])[1]");
 
 
 
@@ -37,6 +38,11 @@ namespace MandMdirectExampleProject.Pages
         //Implementing Absraction method which will perform the action on the webpage
         // and return the results of the action. 
 
+        public Homepage ClickOnHelpAndContactUs()
+        {
+            driver.FindElement(HelpAndContactUS).Click();
+            return new Homepage(driver);
+        }
         public Homepage ClickOnSignOut()
         {
             driver.FindElement(SignOut).Click();
